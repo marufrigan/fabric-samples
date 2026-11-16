@@ -1,0 +1,2 @@
+SAMPLE EXPORT LICENCE (research prototype)
+Batch: BATCH_DRONE_001

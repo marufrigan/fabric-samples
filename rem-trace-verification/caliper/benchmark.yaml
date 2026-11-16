@@ -1,0 +1,58 @@
+test:
+  name: remtrace-benchmark
+  description: REMTrace chaincode benchmark
+  workers:
+    number: 2
+  rounds:
+    - label: registerBatch @ 10 TPS
+      txNumber: 200
+      rateControl: { type: fixed-rate, opts: { tps: 10 } }
+      workload: { module: workload/register.js }
+    - label: registerBatch @ 25 TPS
+      txNumber: 500
+      rateControl: { type: fixed-rate, opts: { tps: 25 } }
+      workload: { module: workload/register.js }
+    - label: registerBatch @ 50 TPS
+      txNumber: 1000
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      workload: { module: workload/register.js }
+    - label: registerBatch @ 100 TPS
+      txNumber: 1500
+      rateControl: { type: fixed-rate, opts: { tps: 100 } }
+      workload: { module: workload/register.js }
+    - label: queryBatch @ 50 TPS
+      txNumber: 750
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      workload: { module: workload/query.js, arguments: { fn: queryBatch } }
+    - label: queryBatch @ 100 TPS
+      txNumber: 1500
+      rateControl: { type: fixed-rate, opts: { tps: 100 } }
+      workload: { module: workload/query.js, arguments: { fn: queryBatch } }
+    - label: queryBatch @ 200 TPS
+      txNumber: 3000
+      rateControl: { type: fixed-rate, opts: { tps: 200 } }
+      workload: { module: workload/query.js, arguments: { fn: queryBatch } }
+    - label: traceToOrigin @ 50 TPS
+      txNumber: 750
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      workload: { module: workload/query.js, arguments: { fn: traceToOrigin } }
+    - label: traceToOrigin @ 100 TPS
+      txNumber: 1500
+      rateControl: { type: fixed-rate, opts: { tps: 100 } }
+      workload: { module: workload/query.js, arguments: { fn: traceToOrigin } }
+    - label: traceToOrigin @ 200 TPS
+      txNumber: 3000
+      rateControl: { type: fixed-rate, opts: { tps: 200 } }
+      workload: { module: workload/query.js, arguments: { fn: traceToOrigin } }
+    - label: verifyFullLineageCompliance @ 50 TPS
+      txNumber: 750
+      rateControl: { type: fixed-rate, opts: { tps: 50 } }
+      workload: { module: workload/query.js, arguments: { fn: verifyFullLineageCompliance } }
+    - label: verifyFullLineageCompliance @ 100 TPS
+      txNumber: 1500
+      rateControl: { type: fixed-rate, opts: { tps: 100 } }
+      workload: { module: workload/query.js, arguments: { fn: verifyFullLineageCompliance } }
+    - label: verifyFullLineageCompliance @ 200 TPS
+      txNumber: 3000
+      rateControl: { type: fixed-rate, opts: { tps: 200 } }
+      workload: { module: workload/query.js, arguments: { fn: verifyFullLineageCompliance } }

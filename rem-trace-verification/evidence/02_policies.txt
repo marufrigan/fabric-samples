@@ -1,0 +1,12 @@
+# identity: RegulatorMSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"setMaterialRegistrationPolicy","Args":["{\"ore\":{\"mspId\":\"Org1MSP\",\"owner\":\"MineOrg\"},\"refined\":{\"mspId\":\"Org1MSP\",\"owner\":\"RefineryOrg\"},\"magnet\":{\"mspId\":\"Org1MSP\",\"owner\":\"MagnetFactoryOrg\"},\"motor\":{\"mspId\":\"Org2MSP\",\"owner\":\"MotorFactoryOrg\"},\"drone\":{\"mspId\":\"Org2MSP\",\"owner\":\"DroneFactoryOrg\"}}"]}'
+[chaincodeCmd] ClientWait -> txid [c4e1efdb47af5e6fca8f46b70457b6ba07373d165d42098bdc93fa356f3c408f] committed with status (VALID) at 127.0.0.1:7055
+[chaincodeCmd] ClientWait -> txid [c4e1efdb47af5e6fca8f46b70457b6ba07373d165d42098bdc93fa356f3c408f] committed with status (VALID) at 127.0.0.1:7051
+[chaincodeCmd] chaincodeInvokeOrQuery -> Chaincode invoke successful. result: status:200 payload:"{\"ore\":{\"mspId\":\"Org1MSP\",\"owner\":\"MineOrg\"},\"refined\":{\"mspId\":\"Org1MSP\",\"owner\":\"RefineryOrg\"},\"magnet\":{\"mspId\":\"Org1MSP\",\"owner\":\"MagnetFactoryOrg\"},\"motor\":{\"mspId\":\"Org2MSP\",\"owner\":\"MotorFactoryOrg\"},\"drone\":{\"mspId\":\"Org2MSP\",\"owner\":\"DroneFactoryOrg\"}}" 
+
+# identity: RegulatorMSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"setRestrictedCountriesPolicy","Args":["[\"BANNEDSTATE\",\"RESTRICTEDLAND\"]"]}'
+[chaincodeCmd] ClientWait -> txid [9ae0c60c9add309a99f6b443d475b03a2bcd51c253c4db2af6ab27b857389418] committed with status (VALID) at 127.0.0.1:7055
+[chaincodeCmd] ClientWait -> txid [9ae0c60c9add309a99f6b443d475b03a2bcd51c253c4db2af6ab27b857389418] committed with status (VALID) at 127.0.0.1:7051
+[chaincodeCmd] chaincodeInvokeOrQuery -> Chaincode invoke successful. result: status:200 payload:"[\"BANNEDSTATE\",\"RESTRICTEDLAND\"]" 
+

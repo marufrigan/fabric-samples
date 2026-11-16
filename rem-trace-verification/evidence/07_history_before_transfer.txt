@@ -1,0 +1,4 @@
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["getBatchHistory","BATCH_DRONE_001"]}'
+[{"txId":"6f3bda898840b99d95e69184a412fb3000e41609661e33a28a7442374cda826e","timestamp":"2026-11-16T23:42:44.894Z","isDelete":false,"value":{"batchID":"BATCH_DRONE_001","parentBatchID":"BATCH_MOTOR_001","owner":"DroneFactoryOrg","materialType":"drone","country":"USA","propertiesHash":"174846d29773bc3cda8bbae88fa8257a6bf6d147c7bbe7bbbaf6026091d44be5","complianceFlag":true,"timestamp":"2026-11-16T23:42:44.894Z","creatorMSP":"Org2MSP","creatorID":"x509::/C=US/ST=California/L=San Francisco/OU=admin/CN=Admin@org2.example.com::/C=US/ST=California/L=San Francisco/O=org2.example.com/CN=ca.org2.example.com","custodianMSP":"Org2MSP","custodianID":"x509::/C=US/ST=California/L=San Francisco/OU=admin/CN=Admin@org2.example.com::/C=US/ST=California/L=San Francisco/O=org2.example.com/CN=ca.org2.example.com","previousOwner":"","transferTimestamp":""}}]
+

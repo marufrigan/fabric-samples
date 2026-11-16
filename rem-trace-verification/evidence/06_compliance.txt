@@ -1,0 +1,8 @@
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["verifyCompliance","BATCH_DRONE_001"]}'
+{"batchID":"BATCH_DRONE_001","complianceFlag":true,"country":"USA","restrictedCountries":["BANNEDSTATE","RESTRICTEDLAND"],"isCompliant":true,"reason":"Batch is compliant"}
+
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["verifyFullLineageCompliance","BATCH_DRONE_001"]}'
+{"batchID":"BATCH_DRONE_001","isCompliant":true,"issues":[],"lineageDepth":5}
+

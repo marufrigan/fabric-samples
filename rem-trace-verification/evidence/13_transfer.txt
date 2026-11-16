@@ -1,0 +1,28 @@
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"transferBatch","Args":["BATCH_DRONE_001","AttackerOrg","Org1MSP"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Unauthorized transfer of BATCH_DRONE_001. Current custodian MSP: Org2MSP, got: Org1MSP" 
+
+# identity: Org2MSP User1
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"transferBatch","Args":["BATCH_DRONE_001","AttackerOrg","Org2MSP"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Unauthorized transfer of BATCH_DRONE_001. Caller is not the identity that holds custody of this batch" 
+
+# identity: Org2MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"transferBatch","Args":["BATCH_DRONE_001","DefenceBuyerOrg","Org1MSP"]}'
+[chaincodeCmd] ClientWait -> txid [aff4b679376ad27af329abf6876a1f86bafe6e485396e7c0b9beb0b30c69a2ce] committed with status (VALID) at 127.0.0.1:7051
+[chaincodeCmd] ClientWait -> txid [aff4b679376ad27af329abf6876a1f86bafe6e485396e7c0b9beb0b30c69a2ce] committed with status (VALID) at 127.0.0.1:7055
+[chaincodeCmd] chaincodeInvokeOrQuery -> Chaincode invoke successful. result: status:200 payload:"{\"batchID\":\"BATCH_DRONE_001\",\"status\":\"PENDING_ACCEPTANCE\",\"pendingTransfer\":{\"newOwner\":\"DefenceBuyerOrg\",\"newOwnerMSP\":\"Org1MSP\",\"offeredByMSP\":\"Org2MSP\",\"offeredByID\":\"x509::/C=US/ST=California/L=San Francisco/OU=admin/CN=Admin@org2.example.com::/C=US/ST=California/L=San Francisco/O=org2.example.com/CN=ca.org2.example.com\",\"offeredAt\":\"2026-11-16T23:43:05.662Z\"}}" 
+
+# identity: Org2MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"acceptTransfer","Args":["BATCH_DRONE_001"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Unauthorized acceptance of BATCH_DRONE_001. Receiving MSP: Org1MSP, got: Org2MSP" 
+
+# identity: Org1MSP User1
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"acceptTransfer","Args":["BATCH_DRONE_001"]}'
+[chaincodeCmd] ClientWait -> txid [ae289d08d3493d35ac9ba931b92cad413c2f034ef9932c0d4512114b312b8110] committed with status (VALID) at 127.0.0.1:7051
+[chaincodeCmd] ClientWait -> txid [ae289d08d3493d35ac9ba931b92cad413c2f034ef9932c0d4512114b312b8110] committed with status (VALID) at 127.0.0.1:7055
+[chaincodeCmd] chaincodeInvokeOrQuery -> Chaincode invoke successful. result: status:200 payload:"{\"batchID\":\"BATCH_DRONE_001\",\"status\":\"TRANSFERRED\",\"previousOwner\":\"DroneFactoryOrg\",\"newOwner\":\"DefenceBuyerOrg\",\"previousCustodianMSP\":\"Org2MSP\",\"newCustodianMSP\":\"Org1MSP\",\"newCustodianID\":\"x509::/C=US/ST=California/L=San Francisco/OU=client/CN=User1@org1.example.com::/C=US/ST=California/L=San Francisco/O=org1.example.com/CN=ca.org1.example.com\",\"transferTimestamp\":\"2026-11-16T23:43:07.824Z\"}" 
+
+# identity: Org2MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"transferBatch","Args":["BATCH_DRONE_001","ThirdPartyOrg","Org2MSP"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Unauthorized transfer of BATCH_DRONE_001. Current custodian MSP: Org1MSP, got: Org2MSP" 
+

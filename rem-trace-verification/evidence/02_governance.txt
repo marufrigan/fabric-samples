@@ -1,0 +1,22 @@
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"setGovernancePolicy","Args":["RegulatorMSP"]}'
+[chaincodeCmd] ClientWait -> txid [2d0768ea2b5b1f799184e74645d844de83b779508f6d37327771574ab86ae557] committed with status (VALID) at 127.0.0.1:7051
+[chaincodeCmd] ClientWait -> txid [2d0768ea2b5b1f799184e74645d844de83b779508f6d37327771574ab86ae557] committed with status (VALID) at 127.0.0.1:7055
+[chaincodeCmd] chaincodeInvokeOrQuery -> Chaincode invoke successful. result: status:200 payload:"{\"regulatorMSP\":\"RegulatorMSP\",\"setByMSP\":\"Org1MSP\",\"setByID\":\"x509::/C=US/ST=California/L=San Francisco/OU=admin/CN=Admin@org1.example.com::/C=US/ST=California/L=San Francisco/O=org1.example.com/CN=ca.org1.example.com\",\"updatedAt\":\"2026-11-16T23:42:29.212Z\"}" 
+
+# identity: Org1MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["getGovernancePolicy"]}'
+{"regulatorMSP":"RegulatorMSP","setByMSP":"Org1MSP","setByID":"x509::/C=US/ST=California/L=San Francisco/OU=admin/CN=Admin@org1.example.com::/C=US/ST=California/L=San Francisco/O=org1.example.com/CN=ca.org1.example.com","updatedAt":"2026-11-16T23:42:29.212Z"}
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"setGovernancePolicy","Args":["Org1MSP"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Only the current regulator MSP (RegulatorMSP) can change the governance policy, got: Org1MSP" 
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"setRestrictedCountriesPolicy","Args":["[\"NOWHERE\"]"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Only the regulator MSP (RegulatorMSP) can update the restricted countries policy, got: Org1MSP" 
+
+# identity: RegulatorMSP User1 (no admin role)
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"setRestrictedCountriesPolicy","Args":["[\"NOWHERE\"]"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Only an administrator identity of RegulatorMSP can update the restricted countries policy" 
+

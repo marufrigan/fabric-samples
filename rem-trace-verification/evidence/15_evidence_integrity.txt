@@ -1,0 +1,7 @@
+on-chain propertiesHash (BATCH_ORE_001): 33023d3111a7b4237d1fab6edee0c559aec1d7fabcdf2a76c458301d472a935f
+$ sha256sum offchain/BATCH_ORE_001_evidence.txt
+33023d3111a7b4237d1fab6edee0c559aec1d7fabcdf2a76c458301d472a935f
+RESULT: MATCH (document unchanged)
+$ sha256sum offchain/BATCH_ORE_001_evidence_TAMPERED.txt
+8c16b10b8102fa8430634c34b87737a287005e6172bffc812677b84872e896f7
+RESULT: MISMATCH (tampering detected)

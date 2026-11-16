@@ -1,0 +1,10 @@
+# identity: RegulatorMSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerCertificate","Args":["BATCH_DRONE_001","CERT_DRONE_001","EXPORT_LICENCE","RegulatorCA","2026-01-01T00:00:00.000Z","2030-12-31T23:59:59.000Z","4746c55f8f37f5f0837c01cd6c656034bf3b6f3e49bae97ab8280fcb53ad4721","VALID"]}'
+[chaincodeCmd] ClientWait -> txid [18b233d5e641fed0591bf00b4b96e51c9d5437fa4dc805d4c24c8f198b11d299] committed with status (VALID) at 127.0.0.1:7055
+[chaincodeCmd] ClientWait -> txid [18b233d5e641fed0591bf00b4b96e51c9d5437fa4dc805d4c24c8f198b11d299] committed with status (VALID) at 127.0.0.1:7051
+[chaincodeCmd] chaincodeInvokeOrQuery -> Chaincode invoke successful. result: status:200 payload:"{\"batchID\":\"BATCH_DRONE_001\",\"certificateID\":\"CERT_DRONE_001\",\"certificateType\":\"EXPORT_LICENCE\",\"issuer\":\"RegulatorCA\",\"issueDate\":\"2026-01-01T00:00:00.000Z\",\"expiryDate\":\"2030-12-31T23:59:59.000Z\",\"certificateHash\":\"4746c55f8f37f5f0837c01cd6c656034bf3b6f3e49bae97ab8280fcb53ad4721\",\"status\":\"VALID\",\"registeredAt\":\"2026-11-16T23:42:58.793Z\"}" 
+
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["verifyCertificate","BATCH_DRONE_001","CERT_DRONE_001"]}'
+{"batchID":"BATCH_DRONE_001","certificateID":"CERT_DRONE_001","isValid":true,"checks":{"exists":true,"statusValid":true,"notExpired":true},"certificateType":"EXPORT_LICENCE","issuer":"RegulatorCA","issueDate":"2026-01-01T00:00:00.000Z","expiryDate":"2030-12-31T23:59:59.000Z","certificateHash":"4746c55f8f37f5f0837c01cd6c656034bf3b6f3e49bae97ab8280fcb53ad4721","message":"On-chain metadata and anchor hash are consistent; off-chain document must still be checked by auditors"}
+
