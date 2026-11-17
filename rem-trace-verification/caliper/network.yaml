@@ -1,0 +1,23 @@
+name: REMTrace test network
+version: "2.0.0"
+caliper:
+  blockchain: fabric
+channels:
+  - channelName: mychannel
+    contracts:
+      - id: remtrace
+organizations:
+  - mspid: Org1MSP
+    identities:
+      certificates:
+        - name: Admin
+          clientPrivateKey:
+            path: ../../test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/priv_sk
+          clientSignedCert:
+            path: ../../test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
+    peers:
+      - endpoint: 127.0.0.1:7051
+        grpcOptions:
+          ssl-target-name-override: peer0.org1.example.com
+        tlsCACerts:
+          path: ../../test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt

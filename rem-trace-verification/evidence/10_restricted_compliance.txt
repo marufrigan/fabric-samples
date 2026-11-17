@@ -1,0 +1,12 @@
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["verifyCompliance","BATCH_DRONE_002"]}'
+{"batchID":"BATCH_DRONE_002","complianceFlag":true,"country":"USA","restrictedCountries":["BANNEDSTATE","RESTRICTEDLAND"],"isCompliant":true,"reason":"Batch is compliant"}
+
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["verifyCompliance","BATCH_ORE_002"]}'
+{"batchID":"BATCH_ORE_002","complianceFlag":true,"country":"RESTRICTEDLAND","restrictedCountries":["BANNEDSTATE","RESTRICTEDLAND"],"isCompliant":false,"reason":"Batch failed compliance flag or country restriction checks"}
+
+# identity: Org2MSP admin
+$ peer chaincode query -C mychannel -n remtrace -c '{"Args":["verifyFullLineageCompliance","BATCH_DRONE_002"]}'
+{"batchID":"BATCH_DRONE_002","isCompliant":false,"issues":["Batch BATCH_ORE_002 is from restricted country RESTRICTEDLAND"],"lineageDepth":5}
+

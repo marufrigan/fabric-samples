@@ -1,0 +1,14 @@
+| Name                                  | Succ | Fail | Send Rate (TPS) | Max Latency (s) | Min Latency (s) | Avg Latency (s) | Throughput (TPS) |
+| registerBatch @ 10 TPS                | 200  | 0    | 10.1            | 0.92            | 0.05            | 0.48            | 10.1             |
+| registerBatch @ 25 TPS                | 500  | 0    | 25.1            | 0.43            | 0.05            | 0.24            | 25.0             |
+| registerBatch @ 50 TPS                | 1000 | 0    | 50.1            | 0.37            | 0.05            | 0.17            | 50.0             |
+| registerBatch @ 100 TPS               | 1405 | 95   | 98.0            | 6.59            | 0.15            | 2.43            | 75.7             |
+| queryBatch @ 50 TPS                   | 750  | 0    | 50.1            | 0.02            | 0.00            | 0.01            | 50.1             |
+| queryBatch @ 100 TPS                  | 1500 | 0    | 100.1           | 0.02            | 0.00            | 0.01            | 100.1            |
+| queryBatch @ 200 TPS                  | 3000 | 0    | 200.1           | 0.04            | 0.00            | 0.01            | 200.0            |
+| traceToOrigin @ 50 TPS                | 750  | 0    | 50.1            | 0.02            | 0.01            | 0.01            | 50.1             |
+| traceToOrigin @ 100 TPS               | 1500 | 0    | 100.1           | 0.03            | 0.00            | 0.01            | 100.1            |
+| traceToOrigin @ 200 TPS               | 3000 | 0    | 200.2           | 0.04            | 0.00            | 0.01            | 200.1            |
+| verifyFullLineageCompliance @ 50 TPS  | 750  | 0    | 50.1            | 0.03            | 0.01            | 0.01            | 50.1             |
+| verifyFullLineageCompliance @ 100 TPS | 1500 | 0    | 100.1           | 0.03            | 0.01            | 0.01            | 100.1            |
+| verifyFullLineageCompliance @ 200 TPS | 3000 | 0    | 200.1           | 0.04            | 0.00            | 0.01            | 200.0            |

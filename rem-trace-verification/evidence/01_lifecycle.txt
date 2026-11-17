@@ -1,0 +1,10 @@
+# identity: Org1MSP admin
+$ peer lifecycle chaincode queryinstalled
+Installed chaincodes on peer:
+Package ID: remtrace_1.0:06ffa307689402af58fa1d81ea41ae2610d77398fd12d4d3ad40e312a9beeee7, Label: remtrace_1.0
+
+# identity: Org1MSP admin
+$ peer lifecycle chaincode querycommitted --channelID mychannel --name remtrace
+Committed chaincode definition for chaincode 'remtrace' on channel 'mychannel':
+Version: 1.0, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: [Org1MSP: true, Org2MSP: true, RegulatorMSP: false]
+

@@ -1,0 +1,3 @@
+SAMPLE EVIDENCE DOCUMENT (research prototype, not a real certificate)
+Batch: BATCH_MAG_001
+Document type: origin and processing declaration

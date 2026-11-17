@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+__MACOSX/
+*.tar.gz
+test-network-nano-bash/data/
+test-network-nano-bash/logs/
+test-network-nano-bash/crypto-config/
+test-network-nano-bash/channel-artifacts/

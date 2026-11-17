@@ -1,0 +1,32 @@
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_ORE_001","","MineOrg","ore","Australia","33023d3111a7b4237d1fab6edee0c559aec1d7fabcdf2a76c458301d472a935f","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Batch BATCH_ORE_001 already exists" 
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_BAD_MATERIAL","","MineOrg","badtype","Australia","33023d3111a7b4237d1fab6edee0c559aec1d7fabcdf2a76c458301d472a935f","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Invalid materialType. Allowed values: ore, refined, magnet, motor, drone" 
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_BAD_OWNER","BATCH_ORE_001","RefineCorp","refined","Japan","3b2cc76cd948c063d678bbd17234dd37c99ac790080705e4c7a8dad5d25ec957","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"owner must match policy owner \"RefineryOrg\" for materialType refined" 
+
+# identity: Org2MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_BAD_MSP","","MineOrg","ore","Australia","33023d3111a7b4237d1fab6edee0c559aec1d7fabcdf2a76c458301d472a935f","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Unauthorized writer for ore. Required MSP: Org1MSP, got: Org2MSP" 
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_BAD_PARENT","NOT_EXISTING_PARENT","RefineryOrg","refined","Japan","3b2cc76cd948c063d678bbd17234dd37c99ac790080705e4c7a8dad5d25ec957","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Parent batch NOT_EXISTING_PARENT does not exist" 
+
+# identity: Org2MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_BAD_STAGE","BATCH_ORE_001","DroneFactoryOrg","drone","USA","174846d29773bc3cda8bbae88fa8257a6bf6d147c7bbe7bbbaf6026091d44be5","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Invalid stage transition: ore -> drone" 
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_NO_PARENT","","RefineryOrg","refined","Japan","3b2cc76cd948c063d678bbd17234dd37c99ac790080705e4c7a8dad5d25ec957","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"Only ore can be registered without a parentBatchID" 
+
+# identity: Org1MSP admin
+$ peer chaincode invoke -o 127.0.0.1:6050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C mychannel -n remtrace --peerAddresses 127.0.0.1:7051 --tlsRootCertFiles $ORG1_CA --peerAddresses 127.0.0.1:7055 --tlsRootCertFiles $ORG2_CA --waitForEvent -c '{"function":"registerBatch","Args":["BATCH_BAD_HASH","","MineOrg","ore","Australia","not-a-hash","true"]}'
+Error: endorsement failure during invoke. response: status:500 message:"propertiesHash must be a valid CID (v0/v1) or hex hash (64-128 chars)" 
+

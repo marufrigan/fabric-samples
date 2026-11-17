@@ -1,0 +1,25 @@
+{
+  "name": "rem-trace-chaincode",
+  "version": "1.0.0",
+  "description": "Hyperledger Fabric chaincode for REM supply chain traceability",
+  "main": "index.js",
+  "scripts": {
+    "start": "fabric-chaincode-node start"
+  },
+  "keywords": [
+    "hyperledger-fabric",
+    "chaincode",
+    "supply-chain",
+    "traceability",
+    "rem"
+  ],
+  "author": "fabric-samples user",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fabric-contract-api": "^2.5.7",
+    "fabric-shim": "^2.5.7"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
